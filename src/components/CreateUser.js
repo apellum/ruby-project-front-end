@@ -5,7 +5,7 @@ const CreateUser = ({ updateUsers, loggedInUser}) => {
     const [newUserForm, setNewUserForm] = useState({
         username: ""
     })
-    // const history = useHistory()
+    const history = useHistory()
 
 const handleChange = (event) => {
     const value = event.target.value
@@ -26,9 +26,9 @@ const handleSubmit = (event) => {
     .then(resp => resp.json())
     .then(data => {
         updateUsers(data)
-        // history.push(`/users/${data.id}`)
         loggedInUser(data)
         setNewUserForm(data)
+        history.push(`/recipes/new`)
     })
 
     setNewUserForm({
