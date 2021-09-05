@@ -1,15 +1,7 @@
-import React, { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import React from 'react'
 
-const RecipeCard = () => {
-    const [recipe, setRecipe] = useState(null)
-    const params = useParams()
+const RecipeCard = ({recipe, deleteRecipe}) => {
 
-    useEffect(() => {
-        fetch("http://localhost:9393/recipes/" + params.id)
-        .then(resp => resp.json())
-        .then(recipe => setRecipe(recipe))
-    }, [])
 
     return (
         <div>
@@ -17,6 +9,7 @@ const RecipeCard = () => {
             <p>{recipe.ingredients}</p>
             <p>{recipe.description}</p>
             <p>{recipe.user}</p>
+            <button onClick={deleteRecipe}>Delete Recipe</button>
         </div>
     )
 }

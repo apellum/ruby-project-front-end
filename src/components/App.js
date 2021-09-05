@@ -7,61 +7,51 @@ import NavBar from './NavBar';
 import RecipeList from './RecipeList';
 import CreateUser from './CreateUser';
 import CreateRecipe from './CreateRecipe';
-import RecipeCard from './RecipeCard';
+import MyRecipes from './MyRecipes'
 import Login from './Login';
-import userEvent from '@testing-library/user-event';
 
 
 function App() {
-  // const [username, setUsername] = useState("")
-  const [recipes, setRecipes] = useState([])
-
-//   const [formInput, setFormInput] = useState({
-//     name: "",
-//     position: "",
-//     bio: "",
-//     likes: 0
-// })
+  const [loggedIn, setLoggedIn] = useState(null)
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
-    fetch("http://localhost:9393/recipes")
+    fetch('http://localhost:9393/users')
     .then(resp => resp.json())
-    .then(data => setRecipes(data))
+    .then(data => setUsers(data))
   }, [])
 
-  function updateRecipes (updatedRecipe) {
-    const newRecipeList = recipes.map(recipe => {
-      if (recipe.id === updatedRecipe.id) {
-        return {...updatedRecipe}
-      } else {
-        return recipe
-      }
-    })
-    setRecipes(newRecipeList)
+  const updateUsers = (createdUser) => {
+    setUsers([...users, createdUser])
+  }
+
+  const loggedInUser = (user) => {
+    setLoggedIn(user)
   }
 
   return (
     <div>
+      {loggedIn ? <div>Welcome to Recipe Book {loggedIn.username}</div> : ""}
       <Router>
-        < NavBar/>
+        < NavBar loggedIn={loggedIn}/>
         <Switch>
           <Route exact path='/home'>
             < Home/>
           </Route>
           <Route exact path='/login'>
-            < Login/>
+            < Login loggedInUser={loggedInUser}/>
           </Route>
           <Route exact path='/users/new'>
-            < CreateUser/>
+            < CreateUser updateUsers={updateUsers} loggedInUser={loggedInUser} />
           </Route>
           <Route exact path='/recipes/new'>
-            < CreateRecipe/>
+            < CreateRecipe loggedIn={loggedIn}/>
+          </Route>
+          <Route exact path='/users/:username/recipes'>
+            < MyRecipes loggedIn={loggedIn}/>
           </Route>
           <Route exact path='/recipes'>
-            < RecipeList  recipes={recipes}/>
-          </Route>
-          <Route exactpath='/recipes/:id'>
-            <RecipeCard/>
+            < RecipeList />
           </Route>
         </Switch>
       </Router>

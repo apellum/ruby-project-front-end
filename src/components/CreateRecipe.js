@@ -1,13 +1,17 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
 import { useHistory } from 'react-router-dom'
 
-const CreateRecipe = () => {
+const CreateRecipe = ({ loggedIn }) => {
     const [formInput, setFormInput] = useState({
         name: "",
         ingredients: "",
         description: "",
-        user: ""
+        user_id: loggedIn.id
     })
+
+    const history = useHistory()
+
 
     function handleChange (event) {
         const key = event.target.name
@@ -18,27 +22,21 @@ const CreateRecipe = () => {
            [key]: value 
         })
     }
-// The useHistory hook gives you access to the history instance that you may use to navigate.
-    const history = useHistory()
     
 
     function handleSubmit (event) {
         event.preventDefault()
-        
-        fetch("http://localhost:9393/recipes", {
+        fetch('http://localhost:9393/recipes', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                "Accept": "application/json"
             },
             body: JSON.stringify(formInput)
         })
         .then(resp => resp.json())
         .then(data => {
-
-            //take a look here
-            history.push(`/recipes/${data.id}`)
         })
+        history.push(`/users/${loggedIn.username}/recipes`)
 
         
 
@@ -46,7 +44,6 @@ const CreateRecipe = () => {
             name: "",
             ingredients: "",
             description: "",
-            user: ""
         })
 
     }

@@ -1,15 +1,19 @@
-import { pipelinePrimaryTopicReference } from '@babel/types'
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import RecipeCard from './RecipeCard'
 
 
-const RecipeList = ({recipes}) => {
+const RecipeList = () => {
+    const [recipes, setRecipes] = useState([])
 
-    const recipeArray = recipes.map(recipe => 
-    <li key={recipe.id}>
-        <p>{recipe.name}</p>
-    </li>)
-    console.log(recipeArray)
+    useEffect(() => {
+        fetch('http://localhost:9393/recipes')
+        .then(resp => resp.json())
+        .then(data => setRecipes(data))
+    }, [])
+
+    const recipeArray = recipes.map((recipe, index) => < RecipeCard key={index} recipe={recipe}/>)
+
     return (
         <div>
             {recipeArray}
