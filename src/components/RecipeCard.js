@@ -1,7 +1,7 @@
 import React from 'react'
 
-const RecipeCard = ({recipe, deleteRecipe}) => {
-
+const RecipeCard = ({recipe, deleteRecipe, loggedIn}) => {
+    
 
     return (
         <div>
@@ -9,7 +9,9 @@ const RecipeCard = ({recipe, deleteRecipe}) => {
             <p>{recipe.ingredients}</p>
             <p>{recipe.description}</p>
             <p>{recipe.user}</p>
-            <button onClick={deleteRecipe}>Delete Recipe</button>
+            <div>
+                {loggedIn ? (<button onClick={deleteRecipe}>Delete Recipe</button>) : (null)}
+            </div>
         </div>
     )
 }

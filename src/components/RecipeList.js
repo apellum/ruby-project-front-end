@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import RecipeCard from './RecipeCard'
 
 
-const RecipeList = () => {
+const RecipeList = ({loggedIn}) => {
     const [recipes, setRecipes] = useState([])
 
     useEffect(() => {
@@ -12,7 +12,7 @@ const RecipeList = () => {
         .then(data => setRecipes(data))
     }, [])
 
-    const recipeArray = recipes.map((recipe, index) => < RecipeCard key={index} recipe={recipe}/>)
+    const recipeArray = recipes.map((recipe, index) => < RecipeCard key={index} recipe={recipe} loggedIn={loggedIn}/>)
 
     return (
         <div>

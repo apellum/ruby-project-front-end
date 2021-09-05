@@ -29,11 +29,15 @@ function App() {
     setLoggedIn(user)
   }
 
+  const userLogOut = () => {
+    setLoggedIn(null)
+  }
+
   return (
     <div>
       {loggedIn ? <div>Welcome to Recipe Book {loggedIn.username}</div> : ""}
       <Router>
-        < NavBar loggedIn={loggedIn}/>
+        < NavBar loggedIn={loggedIn} userLogOut={userLogOut}/>
         <Switch>
           <Route exact path='/home'>
             < Home/>
@@ -51,7 +55,7 @@ function App() {
             < MyRecipes loggedIn={loggedIn}/>
           </Route>
           <Route exact path='/recipes'>
-            < RecipeList />
+            < RecipeList loggedIn={loggedIn}/>
           </Route>
         </Switch>
       </Router>
