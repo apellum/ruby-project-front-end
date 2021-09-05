@@ -35,9 +35,9 @@ function App() {
 
   return (
     <div>
-      {loggedIn ? <div>Welcome to Recipe Book {loggedIn.username}</div> : ""}
       <Router>
         < NavBar loggedIn={loggedIn} userLogOut={userLogOut}/>
+      <h2>{loggedIn ? <div>Welcome to Recipe Book {loggedIn.username}</div> : ""}</h2>
         <Switch>
           <Route exact path='/home'>
             < Home/>

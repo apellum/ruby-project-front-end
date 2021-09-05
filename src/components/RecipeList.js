@@ -15,7 +15,7 @@ const RecipeList = ({loggedIn}) => {
     const recipeArray = recipes.map((recipe, index) => < RecipeCard key={index} recipe={recipe} loggedIn={loggedIn}/>)
 
     return (
-        <div>
+        <div className="recipe-list">
             {recipeArray}
         </div>
     )
